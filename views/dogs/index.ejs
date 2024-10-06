@@ -9,8 +9,11 @@
     <h1>All Dogs</h1>
 <ul>
     <% dogs.forEach(dog => { %>
-        <li><%= dog.name %></li>
+        <li>
+            <a href="/dogs/<%= dog._id %>"> <%= dog.name %></a>
+        </li>
 <% }); %>
+<a href="/dogs/new">Add New Dog</a>
 </ul>  
 </body>
 </html>

@@ -28,6 +28,10 @@ app.get("/dogs/new", (req, res) => {
   res.render("dogs/new.ejs")
 });
 
+app.get("/dogs/:dogId", async (req, res) => {
+  const foundDog = await Dog.findById(req.params.dogId);
+  res.render("dogs/show.ejs", { dog: foundDog });
+});
 app.post("/dogs", async (req, res) => {
   if (req.body.isCute === "on") {
     req.body.isCute = true;
@@ -35,7 +39,7 @@ app.post("/dogs", async (req, res) => {
     req.body.isCute = false;
   }
   await Dog.create(req.body);
-  res.redirect("/dogs/new");
+  res.redirect("/dogs/");
 });
 
 app.get('/dogs', (req, res) => {
