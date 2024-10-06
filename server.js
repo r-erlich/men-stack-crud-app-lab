@@ -3,9 +3,15 @@ dotenv.config();
 
 const express = require('express')
 const mongoose = require('mongoose')
-
+const methodOverride = require("method-override");
+const morgan = require("morgan")
 const app = express();
 app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride("_method"));
+app.use(morgan("dev")); 
+
+
+
 
 const Dog = require("./models/dog.js");
 
@@ -32,6 +38,14 @@ app.get("/dogs/:dogId", async (req, res) => {
   const foundDog = await Dog.findById(req.params.dogId);
   res.render("dogs/show.ejs", { dog: foundDog });
 });
+
+
+app.delete("/dogs/:dogId", async (req, res) => {
+  await Dog.findByIdAndDelete(req.params.dogId);
+  res.redirect('/dogs');
+});
+
+
 app.post("/dogs", async (req, res) => {
   if (req.body.isCute === "on") {
     req.body.isCute = true;

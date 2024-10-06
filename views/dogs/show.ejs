@@ -11,6 +11,10 @@
 <% } else { %>
     <p>That dog isn't cute??? Impossible</p>
    <% } %>
+ 
+   <form action="/dogs/<%=dog._id%>?_method=DELETE" method="POST">
+    <button type="submit">Delete <%= dog.name %></button>
+  </form>
    <a href="/dogs/">Back to dogs</a>
   </body>
 </html>
