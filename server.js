@@ -45,6 +45,12 @@ app.delete("/dogs/:dogId", async (req, res) => {
   res.redirect('/dogs');
 });
 
+app.get('/dogs/:dogId/edit', async (req, res) => {
+  const foundDog = await Dog.findById(req.params.dogId);
+  res.render('dogs/edit.ejs', {
+    dog: foundDog,
+  });
+  });
 
 app.post("/dogs", async (req, res) => {
   if (req.body.isCute === "on") {
@@ -66,5 +72,18 @@ app.post("/dogs", async (req, res) => {
   res.redirect("/dogs/new");
 });
 
+app.put("/dogs/:dogId", async (req, res) => {
+  
+  if (req.body.isCute === "on") {
+    req.body.isCute = true;
+  } else {
+    req.body.isCute = false;
+  }
+  
+  
+  await Dog.findByIdAndUpdate(req.params.dogId, req.body);
 
+ 
+  res.redirect(`/dogs/${req.params.dogId}`);
+});
 app.listen(3000);
